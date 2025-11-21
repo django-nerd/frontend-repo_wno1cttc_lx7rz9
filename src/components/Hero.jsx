@@ -2,6 +2,8 @@ import { motion, useMotionValue, useTransform } from 'framer-motion'
 import { Play, Sparkles } from 'lucide-react'
 import { useEffect } from 'react'
 import { brand } from './Brand'
+import InteractiveGradient from './InteractiveGradient'
+import FloatingOrnaments from './FloatingOrnaments'
 
 function FloatingMockups() {
   const mx = useMotionValue(0)
@@ -63,19 +65,13 @@ function FloatingMockups() {
 export default function Hero({ onPrimaryClick }) {
   return (
     <section className="relative overflow-hidden">
-      {/* Ambient gradient background */}
-      <div
-        className="absolute inset-0 -z-10"
-        style={{
-          background:
-            `radial-gradient(1200px 600px at 20% 10%, ${brand.sky}15 0%, transparent 60%),` +
-            `radial-gradient(1000px 500px at 80% 20%, ${brand.blue}22 0%, transparent 60%),` +
-            `radial-gradient(1200px 700px at 50% 100%, ${brand.navy}18 0%, transparent 60%)`,
-          filter: 'saturate(120%)'
-        }}
-      />
+      {/* Interactive gradient background */}
+      <InteractiveGradient />
 
-      <div className="max-w-7xl mx-auto px-6 pt-24 pb-16 md:pt-28 md:pb-24 text-center">
+      {/* Floating ornaments with parallax on scroll */}
+      <FloatingOrnaments />
+
+      <div className="max-w-7xl mx-auto px-6 pt-24 pb-16 md:pt-28 md:pb-24 text-center relative">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
