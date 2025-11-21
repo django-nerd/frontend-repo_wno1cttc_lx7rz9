@@ -5,7 +5,7 @@ import { brand } from './Brand'
 // Interactive mouse-follow gradient background for hero
 export default function InteractiveGradient() {
   const mx = useMotionValue(0.5)
-  const my = useMotionValue(0.3)
+  const my = useMotionValue(0.35)
 
   useEffect(() => {
     const onMove = (e) => {
@@ -20,19 +20,27 @@ export default function InteractiveGradient() {
   const sx = useSpring(mx, { stiffness: 80, damping: 20 })
   const sy = useSpring(my, { stiffness: 80, damping: 20 })
 
+  // Stronger, more visible gradients
   const bg = useTransform([sx, sy], ([x, y]) => {
     const cx = Math.round(x * 100)
     const cy = Math.round(y * 100)
-    return `radial-gradient(800px 600px at ${cx}% ${cy}%, ${brand.sky}33, transparent 60%),` +
-           `radial-gradient(1000px 700px at 80% 0%, ${brand.blue}25, transparent 70%),` +
-           `radial-gradient(1200px 900px at 10% 100%, ${brand.navy}22, transparent 70%)`
+    return (
+      // Primary hotspot following the cursor
+      `radial-gradient(900px 700px at ${cx}% ${cy}%, ${brand.sky}66, transparent 60%),` +
+      // Top-right wash
+      `radial-gradient(1100px 800px at 85% 10%, ${brand.blue}44, transparent 70%),` +
+      // Bottom-left depth
+      `radial-gradient(1300px 900px at 8% 90%, ${brand.navy}33, transparent 70%),` +
+      // Subtle base so it9s visible even before moving
+      `linear-gradient(180deg, ${brand.sky}0f, transparent)`
+    )
   })
 
   return (
     <motion.div
       aria-hidden
       className="absolute inset-0 -z-20"
-      style={{ background: bg, filter: 'saturate(120%)' }}
+      style={{ background: bg, filter: 'saturate(120%) contrast(105%)' }}
     />
   )
 }
